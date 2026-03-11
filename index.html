@@ -1659,10 +1659,28 @@ function addConfirmButtons(which, compressed) {
   const container = document.getElementById(containerId);
   const div = document.createElement('div');
   div.style.paddingLeft = '86px';
-  div.innerHTML = `
-    <button class="btn-confirm" onclick="${which === 'q2' ? 'confirmQ2' : 'confirmQ3'}('${compressed.replace(/'/g, "\\'")}')">✓ 확인 — 이 문장으로 확정</button>
-    <button class="btn-edit" onclick="document.getElementById('${which}Input').value=''; document.getElementById('${which}InputRow').style.display='flex';">수정하기</button>
-  `;
+  div.style.marginTop = '10px';
+  div.style.display = 'flex';
+  div.style.gap = '8px';
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.className = 'btn-confirm';
+  confirmBtn.textContent = '✓ 확인 — 이 문장으로 확정';
+  confirmBtn.addEventListener('click', () => {
+    which === 'q2' ? confirmQ2(compressed) : confirmQ3(compressed);
+  });
+
+  const editBtn = document.createElement('button');
+  editBtn.className = 'btn-edit';
+  editBtn.textContent = '수정하기';
+  editBtn.addEventListener('click', () => {
+    document.getElementById(which + 'Input').value = '';
+    document.getElementById(which + 'InputRow').style.display = 'flex';
+    document.getElementById(which + 'Input').focus();
+  });
+
+  div.appendChild(confirmBtn);
+  div.appendChild(editBtn);
   container.appendChild(div);
 }
 
